@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 app.test_client()
-
+# app.register_blueprint(principal_power)
 
 # this is to enforce fk (not done by default in sqlite3)
 @event.listens_for(Engine, "connect")

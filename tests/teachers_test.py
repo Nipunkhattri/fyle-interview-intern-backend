@@ -99,3 +99,52 @@ def test_grade_assignment_draft_assignment(client, h_teacher_1):
     data = response.json
 
     assert data['error'] == 'FyleError'
+
+
+def test_regrade_assignment_teacher(client, h_principal):
+    # Use a non-principal user token
+    response = client.post(
+        '/teacher/assignments/grade',
+        headers= {"user_id":3, "principal_id":3},
+        json={
+            'id':4,
+            'grade':'B'
+        }
+    )
+
+    assert response.status_code == 401
+
+def test_get_assignments_teacher(client, h_principal):
+    # Use a non-principal user token
+    response = client.get(
+        '/teacher/assignments',
+        headers= {"user_id":3, "teacher_id":3},
+    )
+
+    assert response.status_code == 401
+
+
+def test_grade_assignment_1(client,h_teacher_1):
+    response = client.post(
+        '/teacher/assignments/grade',
+        headers= h_teacher_1,
+        json={
+            'id':1,
+            'grade':'B'
+        }
+    )
+    
+    assert response.status_code == 200
+
+
+def test_grade_assignment_2(client,h_teacher_2):
+    response = client.post(
+        '/teacher/assignments/grade',
+        headers= h_teacher_2,
+        json={
+            'id':3,
+            'grade':'B'
+        }
+    )
+    
+    assert response.status_code == 200

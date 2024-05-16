@@ -1,0 +1,23 @@
+1 Build a Docker Image
+
+sudo docker build -t <image_name>:<tag> .
+
+ex: sudo docker build -t flask_app:latest .
+
+2. Run The server
+
+sudo docker run -p 5000:7755 <image_name>:<tag>
+
+As our server is running at 7755 so we have to map 5000 port with the server port
+
+Your server will be Live!
+
+<!-- Some more commands -->
+
+3. Stop the container
+
+sudo docker stop <container_id>
+
+4. See the container running
+
+sudo docker ps

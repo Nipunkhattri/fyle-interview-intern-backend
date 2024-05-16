@@ -86,3 +86,39 @@ def test_assignment_resubmit_error(client, h_student_1):
     assert response.status_code == 400
     assert error_response['error'] == 'FyleError'
     assert error_response["message"] == 'only a draft assignment can be submitted'
+
+def test_regrade_assignment_teacher(client, h_principal):
+    # Use a non-principal user token
+    response = client.post(
+        '/student/assignments',
+        headers= {"user_id":1, "student_id":10},
+        json={
+            'id':4,
+            'grade':'B'
+        }
+    )
+
+    assert response.status_code == 401
+
+def test_get_assignments_student(client, h_principal):
+    # Use a non-principal user token
+    response = client.get(
+        '/student/assignments',
+        headers= {"user_id":1, "student_id":10},
+    )
+
+    assert response.status_code == 401
+
+
+def test_submit_assignment_teacher(client, h_principal):
+    # Use a non-principal user token
+    response = client.post(
+        '/student/assignments/submit',
+        headers= {"user_id":1, "student_id":10},
+        json={
+            'id':2,
+            'teacher_id':2
+        }
+    )
+
+    assert response.status_code == 401
